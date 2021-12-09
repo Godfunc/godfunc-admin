@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.godfunc.modules.sys.mapper.UserMapper">
+
+    <select id="selectCustomPage" resultType="com.godfunc.modules.sys.dto.UserDTO">
+        SELECT u.id, u.username, u.gender, u.mobile, u.super_manager, u.status, u.create_id, u.update_id, u.create_time, u.update_time,
+        (SELECT username FROM mg_user WHERE id = u.create_id) create_user,
+        (SELECT username FROM mg_user WHERE id = u.update_id) update_user
+        FROM mg_user u
+        <where>
+            <if test="username!=null and username!=''">
+            <bind name="_username" value="'%'+username+'%'"/>
+             AND u.username LIKE #{_username}
+            </if>
+            <if test="superManager!=null">
+             AND u.super_manager = #{superManager}
+            </if>
+            <if test="status!=null">
+                AND u.status = #{status}
+            </if>
+            AND u.rm_tag = 0
+        </where>
+    </select>
+</mapper>

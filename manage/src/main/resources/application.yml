@@ -1,0 +1,81 @@
+server:
+  port: 9080
+  servlet:
+    context-path: /manage
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver # 如果使用oracle,注意去common的pom.xml中修改驱动的依赖
+    hikari:
+      auto-commit: true
+      connection-timeout: 20000
+      minimum-idle: 5
+      maximum-pool-size: 12
+      idle-timeout: 30000
+      max-lifetime: 1200000
+
+mybatis-plus:
+  global-config:
+    banner: false
+    db-config:
+      id-type: ASSIGN_ID
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  application:
+    name: godfunc-manager
+  datasource:
+    url: jdbc:mysql://localhost:3306/godfunc?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+log:
+  path: /tmp
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  application:
+    name: godfunc-manager
+  datasource:
+    url: jdbc:mysql://localhost:3306/godfunc?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+log:
+  path: /tmp
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  application:
+    name: godfunc-manager
+  datasource:
+    url: jdbc:mysql://localhost:3306/godfunc?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+log:
+  path: /tmp

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.godfunc.modules.log.mapper.LogOperationMapper">
+
+    <select id="selectCustomPage" resultType="com.godfunc.modules.log.entity.LogOperation">
+        SELECT id, operation, request_url, request_params, request_time, user_agent, ip, status, create_user, create_time
+        FROM mg_log_operation
+        <where>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+            <if test="operation!=null and operation!=''">
+                <bind name="_operation" value="'%'+operation+'%'"/>
+                AND operation like #{_operation}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+</mapper>
