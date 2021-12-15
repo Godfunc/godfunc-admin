@@ -31,7 +31,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public BufferedImage create(String uuid) {
         String code = producer.createText();
-        String mathStr = code.substring(0, code.lastIndexOf("="));
+        String mathStr = code.substring(0, code.lastIndexOf("=") + 1);
         //获取运算式结果
         String result = code.substring(code.lastIndexOf("=") + 1);
         captchaCache.put(uuid, result);
