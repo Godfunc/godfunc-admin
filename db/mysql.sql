@@ -1,5 +1,5 @@
-drop table if exists mg_dict;
-create table mg_dict
+drop table if exists mg_config;
+create table mg_config
 (
     id          bigint(20)   not null comment '主键',
     name        varchar(512) not null comment '名称',
@@ -10,10 +10,10 @@ create table mg_dict
     create_time datetime     not null comment '创建时间',
     update_time datetime   default null comment '更新时间',
     primary key (id),
-    unique uk_name (name),
+    index idx_name (name),
     index idx_create_time (create_time)
 ) engine = innodb
-  default charset = utf8mb4 comment ='字典表';
+  default charset = utf8mb4 comment ='配置表';
 
 drop table if exists mg_log_operation;
 create table mg_log_operation
@@ -175,45 +175,48 @@ create table t_user_token
   default charset = utf8mb4 comment '用户token表';
 
 
-insert into mg_menu(id, pid, path, component, type, redirect, name, always_show,
-                    permissions, breadcrumb, active_menu, title, icon, sort, status)
-values (1, 0, '/system', 'Layout', 1, null, '系统功能', 1, null, 1, null, '系统功能', 'system', 0, 1),
-       (2, 1, 'menu', 'menu/index', 1, null, '菜单管理', 0, null, 1, null, '菜单管理', 'menu', 2, 1),
-       (1207275475953606658, 1, 'user', 'user/index', 1, null, '用户管理', 0, 'mg:role:list,mg:role:getByUser', 1, null,
+insert into `mg_menu`(`id`, `pid`, `path`, `component`, `type`, `redirect`, `name`, `always_show`, `permissions`,
+                      `breadcrumb`, `active_menu`, `title`, `icon`, `sort`, `status`)
+values (1, 0, '/system', 'Layout', 1, NULL, '系统功能', 1, NULL, 1, NULL, '系统功能', 'system', 0, 1),
+       (2, 1, 'menu', 'menu/index', 1, NULL, '菜单管理', 0, NULL, 1, NULL, '菜单管理', 'menu', 2, 1),
+       (1207275475953606658, 1, 'user', 'user/index', 1, NULL, '用户管理', 0, 'mg:role:list,mg:role:getByUser', 1, NULL,
         '用户管理', 'user', 1, 1),
-       (1207276248561152001, 1, 'role', 'role/index', 1, null, '角色管理', 0, null, 1, null, '角色管理', 'role', 3, 1),
-       (1207276483303763969, 1, 'log', 'log/index', 1, null, '日志', 0, 'mg:log:page', 1, null, '日志', 'log', 4, 1),
-       (1207276926083854337, 2, null, 'Button', 2, null, '新增根菜单', 0, 'mg:menu:rootadd,mg:menu:add', 1, null, null, null,
+       (1207276248561152001, 1, 'role', 'role/index', 1, NULL, '角色管理', 0, NULL, 1, NULL, '角色管理', 'role', 3, 1),
+       (1207276483303763969, 1, 'log', 'log/index', 1, NULL, '日志', 0, 'mg:log:page', 1, NULL, '日志', 'log', 5, 1),
+       (1207276926083854337, 2, NULL, 'Button', 2, NULL, '新增根菜单', 0, 'mg:menu:rootadd,mg:menu:add', 1, NULL, NULL, NULL,
         0, 1),
-       (1207277652847685634, 0, 'http://localhost:9568/manage/swagger-ui.html', 'Layout', 1, null, '接口文档', 0, null, 1,
-        null, '接口文档', 'link', 1, 1),
-       (1207312840671674369, 1207275475953606658, null, 'Button', 2, null, '查询', 0, 'mg:user:page', 1, null, null, null,
+       (1207277652847685634, 0, 'http://localhost:9568/manage/swagger-ui.html', 'Layout', 1, NULL, '接口文档', 0, NULL, 1,
+        NULL, '接口文档', 'link', 1, 1),
+       (1207312840671674369, 1207275475953606658, NULL, 'Button', 2, NULL, '查询', 0, 'mg:user:page', 1, NULL, NULL, NULL,
         0, 1),
-       (1207312948930854913, 1207275475953606658, null, 'Button', 2, null, '新增', 0, 'mg:user:add', 1, null, null, null,
+       (1207312948930854913, 1207275475953606658, NULL, 'Button', 2, NULL, '新增', 0, 'mg:user:add', 1, NULL, NULL, NULL,
         0, 1),
-       (1207313094955548673, 1207275475953606658, null, 'Button', 2, null, '修改', 0, 'mg:user:edit', 1, null, null, null,
+       (1207313094955548673, 1207275475953606658, NULL, 'Button', 2, NULL, '修改', 0, 'mg:user:edit', 1, NULL, NULL, NULL,
         0, 1),
-       (1207313165424050178, 1207275475953606658, null, 'Button', 2, null, '删除', 0, 'mg:user:remove', 1, null, null,
-        null, 0,
+       (1207313165424050178, 1207275475953606658, NULL, 'Button', 2, NULL, '删除', 0, 'mg:user:remove', 1, NULL, NULL,
+        NULL, 0, 1),
+       (1207315365105811457, 1207276248561152001, NULL, 'Button', 2, NULL, '查询', 0, 'mg:role:page', 1, NULL, NULL, NULL,
+        0, 1),
+       (1207315486644158465, 1207276248561152001, NULL, 'Button', 2, NULL, '新增', 0,
+        'mg:role:add,mg:role:getMenus,mg:menu:getTree', 1, NULL, NULL, NULL, 0, 1),
+       (1207315552452788226, 1207276248561152001, NULL, 'Button', 2, NULL, '修改', 0,
+        'mg:role:edit,mg:role:getMenus,mg:menu:getTree', 1, NULL, NULL, NULL, 0, 1),
+       (1207315799031726081, 1207276248561152001, NULL, 'Button', 2, NULL, '删除', 0, 'mg:role:remove', 1, NULL, NULL,
+        NULL, 0, 1),
+       (1207474062448738306, 2, NULL, 'Button', 2, NULL, '新增', 0, 'mg:menu:add', 1, NULL, NULL, NULL, 0, 1),
+       (1207478281733939201, 2, NULL, 'Button', 2, NULL, '修改', 0, 'mg:menu:edit', 1, NULL, NULL, NULL, 0, 1),
+       (1207478488014004226, 2, NULL, 'Button', 2, NULL, '删除', 0, 'mg:menu:remove', 1, NULL, NULL, NULL, 0, 1),
+       (1207480932173357057, 1207276483303763969, NULL, 'Button', 2, NULL, '查询', 0, 'mg:log:page', 1, NULL, NULL, NULL,
+        0, 1),
+       (1207481715275079681, 2, NULL, 'Button', 2, NULL, '查询', 0, 'mg:menu:getAll', 1, NULL, NULL, NULL, 0, 1),
+       (1475720671933751297, 1, 'config', 'config/index', 1, '', '配置管理', 0, '', 1, '', '配置管理', 'nested', 4, 1),
+       (1475720734483406850, 1475720671933751297, NULL, 'Button', 2, '', '查询', 0, 'mg:config:page', 1, '', '', '', 0,
         1),
-       (1207315365105811457, 1207276248561152001, null, 'Button', 2, null, '查询', 0, 'mg:role:page', 1, null, null, null,
-        0, 1),
-       (1207315486644158465, 1207276248561152001, null, 'Button', 2, null, '新增', 0,
-        'mg:role:add,mg:role:getMenus,mg:menu:getTree', 1, null, null, null, 0, 1),
-       (1207315552452788226, 1207276248561152001, null, 'Button', 2, null, '修改', 0,
-        'mg:role:edit,mg:role:getMenus,mg:menu:getTree', 1, null, null, null, 0, 1),
-       (1207315799031726081, 1207276248561152001, null, 'Button', 2, null, '删除', 0, 'mg:role:remove', 1, null, null,
-        null, 0,
+       (1475720833649336321, 1475720671933751297, NULL, 'Button', 2, '', '新增', 0, 'mg:config:add', 1, '', '', '', 0, 1),
+       (1475720947457581057, 1475720671933751297, NULL, 'Button', 2, '', '修改', 0, 'mg:config:edit', 1, '', '', '', 0,
         1),
-       (1207474062448738306, 2, null, 'Button', 2, null, '新增', 0, 'mg:menu:add', 1, null, null, null, 0, 1),
-       (1207478281733939201, 2, null, 'Button', 2, null, '修改', 0, 'mg:menu:edit', 1, null, null, null, 0, 1),
-       (1207478488014004226, 2, null, 'Button', 2, null, '删除', 0, 'mg:menu:remove', 1, null, null, null, 0, 1),
-       (1207480932173357057, 1207276483303763969, null, 'Button', 2, null, '查询', 0, 'mg:log:page', 1, null, null, null,
-        0, 1),
-       (1207481715275079681, 2, null, 'Button', 2, null, '查询', 0, 'mg:menu:getAll', 1, null, null, null, 0, 1);
-
-insert into mg_role(id, name, remark, create_id, update_id, create_time, update_time)
-values (1207276640430780417, '一般管理员', '具备当前所有菜单', 1, NULL, '2019-12-18 20:29:16', NULL);
+       (1475721014012796930, 1475720671933751297, NULL, 'Button', 2, '', '删除', 0, 'mg:config:remove', 1, '', '', '', 0,
+        1);
 
 insert into mg_user(id, username, password, gender, mobile, super_manager, status, create_id,
                     update_id, create_time, update_time, rm_tag)

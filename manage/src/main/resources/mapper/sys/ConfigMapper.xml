@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.godfunc.modules.sys.mapper.DictMapper">
+<mapper namespace="com.godfunc.modules.sys.mapper.ConfigMapper">
 
-    <select id="selectCustomPage" resultType="com.godfunc.modules.sys.entity.Dict">
-        select id, name, value, remark, create_time, update_time from mg_dict
+    <select id="selectCustomPage" resultType="com.godfunc.modules.sys.entity.Config">
+        select id, name, value, remark, create_time, update_time from mg_config
         <if test="name!=null and name!=''">
             where name = #{name}
         </if>

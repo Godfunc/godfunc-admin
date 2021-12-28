@@ -1,4 +1,4 @@
-create table mg_dict
+create table mg_config
 (
     id          number(20) not null,
     name        varchar2(512) default null,
@@ -11,18 +11,18 @@ create table mg_dict
     primary key (id)
 );
 
-comment on table mg_dict is '字典表';
-comment on column mg_dict.id is '主键';
-comment on column mg_dict.name is '名称';
-comment on column mg_dict.value is '值';
-comment on column mg_dict.remark is '备注';
-comment on column mg_dict.create_id is '创建人';
-comment on column mg_dict.update_id is '更新人';
-comment on column mg_dict.create_time is '创建时间';
-comment on column mg_dict.update_time is '更新时间';
+comment on table mg_config is '配置表';
+comment on column mg_config.id is '主键';
+comment on column mg_config.name is '名称';
+comment on column mg_config.value is '值';
+comment on column mg_config.remark is '备注';
+comment on column mg_config.create_id is '创建人';
+comment on column mg_config.update_id is '更新人';
+comment on column mg_config.create_time is '创建时间';
+comment on column mg_config.update_time is '更新时间';
 
-create index mg_dict_idx_create_time on mg_dict (create_time);
-create index mg_dict_uk_name on mg_dict (name);
+create index mg_config_idx_create_time on mg_config (create_time);
+create index mg_config_idx_name on mg_config (name);
 
 
 create table mg_log_operation
@@ -262,8 +262,9 @@ create unique index t_user_token_uq_token on t_user_token (token);
 
 
 -- data
-insert all into mg_menu(id, pid, path, component, type, redirect, name, always_show,
-                        permissions, breadcrumb, active_menu, title, icon, sort, status)
+insert all
+    into mg_menu(id, pid, path, component, type, redirect, name, always_show,
+                 permissions, breadcrumb, active_menu, title, icon, sort, status)
 values (1, 0, '/system', 'Layout', 1, null, '系统功能', 1, null, 1, null, '系统功能', 'system', 0, 1)
 into mg_menu(id, pid, path, component, type, redirect, name, always_show,
              permissions, breadcrumb, active_menu, title, icon, sort, status)
@@ -336,12 +337,26 @@ values (1207480932173357057, 1207276483303763969, null, 'Button', 2, null, '查�
 into mg_menu(id, pid, path, component, type, redirect, name, always_show,
              permissions, breadcrumb, active_menu, title, icon, sort, status)
 values (1207481715275079681, 2, null, 'Button', 2, null, '查询', 0, 'mg:menu:getAll', 1, null, null, null, 0, 1)
+into mg_menu(id, pid, path, component, type, redirect, name, always_show,
+             permissions, breadcrumb, active_menu, title, icon, sort, status)
+values (1475720671933751297, 1, 'config', 'config/index', 1, '', '配置管理', 0, '', 1, '', '配置管理', 'nested', 4, 1)
+into mg_menu(id, pid, path, component, type, redirect, name, always_show,
+             permissions, breadcrumb, active_menu, title, icon, sort, status)
+values (1475720734483406850, 1475720671933751297, NULL, 'Button', 2, '', '查询', 0, 'mg:config:page', 1, '', '', '', 0,
+        1)
+into mg_menu(id, pid, path, component, type, redirect, name, always_show,
+             permissions, breadcrumb, active_menu, title, icon, sort, status)
+values (1475720833649336321, 1475720671933751297, NULL, 'Button', 2, '', '新增', 0, 'mg:config:add', 1, '', '', '', 0, 1)
+into mg_menu(id, pid, path, component, type, redirect, name, always_show,
+             permissions, breadcrumb, active_menu, title, icon, sort, status)
+values (1475720947457581057, 1475720671933751297, NULL, 'Button', 2, '', '修改', 0, 'mg:config:edit', 1, '', '', '', 0,
+        1)
+into mg_menu(id, pid, path, component, type, redirect, name, always_show,
+             permissions, breadcrumb, active_menu, title, icon, sort, status)
+values (1475721014012796930, 1475720671933751297, NULL, 'Button', 2, '', '删除', 0, 'mg:config:remove', 1, '', '', '', 0,
+        1)
 SELECT 1
 FROM DUAL;
-
-insert into mg_role(id, name, remark, create_id, update_id, create_time, update_time)
-values (1207276640430780417, '一般管理员', '具备当前所有菜单', 1, NULL, TO_DATE('2019-12-18 20:29:16', 'yyyy-MM-dd HH24:mi:ss'),
-        NULL);
 
 insert into mg_user(id, username, password, gender, mobile, super_manager, status, create_id,
                     update_id, create_time, update_time, rm_tag)

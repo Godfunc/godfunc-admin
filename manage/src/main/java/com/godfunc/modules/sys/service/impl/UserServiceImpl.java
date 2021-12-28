@@ -106,7 +106,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             userDetail.setRoles(CollectionUtils.isEmpty(roles) ? EMP_SET : roles.stream().map(Role::getName).collect(Collectors.toSet()));
         }
         if (CollectionUtils.isNotEmpty(roleMenus)) {
-            userDetail.setAuthorities(AuthorityUtils.createAuthorityList(roleMenus.stream().map(x -> x.getPermissions().split(",")).flatMap(Arrays::stream).toArray(String[]::new)));
+            userDetail.setAuthorities(AuthorityUtils.createAuthorityList(roleMenus.stream()
+                    .filter(f -> StringUtils.isNotBlank(f.getPermissions()))
+                    .map(x -> x.getPermissions().split(",")).flatMap(Arrays::stream).toArray(String[]::new)));
         }
         return userDetail;
     }

@@ -7,12 +7,8 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-@ApiModel("修改字典")
-public class DictEditParam {
-
-    @ApiModelProperty("id")
-    @NotNull(message = "请选择要修改的数据")
-    private Long id;
+@ApiModel("新增配置")
+public class ConfigAddParam {
 
     @ApiModelProperty("名称")
     @NotNull(message = "名称不能为空")

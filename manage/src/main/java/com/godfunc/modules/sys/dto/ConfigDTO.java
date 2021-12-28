@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel("字典分页")
-public class DictDTO implements Serializable {
+@ApiModel("配置分页")
+public class ConfigDTO implements Serializable {
 
-    @ApiModelProperty("字典id")
+    @ApiModelProperty("id")
     private Long id;
 
     @ApiModelProperty("名称")

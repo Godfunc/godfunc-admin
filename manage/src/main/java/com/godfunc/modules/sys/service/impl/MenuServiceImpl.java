@@ -90,6 +90,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         if (MenuTypeEnum.MENU.getValue() == param.getType()) {
             Assert.isBlank(param.getComponent(), "组件不能为空");
             Assert.isBlank(param.getPath(), "路由不能为空");
+            Assert.isTrue(count(Wrappers.<Menu>lambdaQuery()
+                    .eq(Menu::getType, MenuTypeEnum.MENU.getValue())
+                    .eq(Menu::getName, param.getName())) > 0, "名称为 {} 的菜单已存在", param.getName());
         } else {
             Assert.isBlank(param.getName(), "名称不能为空");
             Assert.isBlank(param.getComponent(), "组件不能为空");
