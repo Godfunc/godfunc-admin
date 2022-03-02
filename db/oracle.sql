@@ -54,9 +54,9 @@ comment on column mg_log_operation.create_id is '创建人';
 comment on column mg_log_operation.create_user is '用户名';
 comment on column mg_log_operation.create_time is '创建时间';
 
-create index mg_log_operation_idx_create_time on mg_log_operation (create_time);
-create index mg_log_operation_idx_operation on mg_log_operation (operation);
-create index mg_log_operation_idx_create_user on mg_log_operation (create_user);
+create index mg_log_oper_idx_create_time on mg_log_operation (create_time);
+create index mg_log_oper_idx_operation on mg_log_operation (operation);
+create index mg_log_oper_idx_create_user on mg_log_operation (create_user);
 
 
 create table mg_menu

@@ -15,7 +15,8 @@ spring:
       max-request-size: 100MB
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver # 如果使用oracle,注意去common的pom.xml中修改驱动的依赖
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # driver-class-name: oracle.jdbc.driver.OracleDriver 如果使用oracle,注意去common的pom.xml中修改驱动的依赖
     hikari:
       auto-commit: true
       connection-timeout: 20000
@@ -47,6 +48,9 @@ spring:
     url: jdbc:mysql://localhost:3306/godfunc?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
+    # url: jdbc:oracle:thin:@//localhost:1521/ORCL
+    # username: root
+    # password: 123456
 log:
   path: /tmp
 
