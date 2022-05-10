@@ -8,11 +8,13 @@ import com.godfunc.modules.sys.service.UserService;
 import com.godfunc.result.ApiCodeMsg;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedCredentialsNotFoundException;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -31,6 +33,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     private final UserService userService;
     private final UserTokenService userTokenService;
+    private final AntPathRequestMatcher matcher = new AntPathRequestMatcher(ManageConstant.LOGIN_PATH, HttpMethod.POST.name());
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
@@ -57,5 +60,10 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return matcher.matches(request);
     }
 }

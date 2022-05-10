@@ -1,6 +1,7 @@
 package com.godfunc.modules.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.godfunc.common.constant.ManageConstant;
 import com.godfunc.constant.CommonConstant;
 import com.godfunc.modules.security.dto.LoginDTO;
 import com.godfunc.modules.security.entity.UserToken;
@@ -11,6 +12,7 @@ import com.godfunc.modules.sys.model.UserDetail;
 import com.godfunc.result.R;
 import com.godfunc.util.ResponseUtils;
 import com.godfunc.util.ValidatorUtils;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -32,7 +34,7 @@ public class UsernamePasswordJsonAuthenticationFilter extends UsernamePasswordAu
         this.userTokenService = userTokenService;
         this.captchaService = captchaService;
         this.setPostOnly(true);
-        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login", "POST"));
+        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(ManageConstant.LOGIN_PATH, HttpMethod.POST.name()));
         this.setAuthenticationManager(authenticationManager);
     }
 

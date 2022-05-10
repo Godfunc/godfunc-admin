@@ -18,4 +18,5 @@ public interface ManageConstant {
     long EXPIRED_PLUS = 5;
 
 
+    String LOGIN_PATH = "/login";
 }

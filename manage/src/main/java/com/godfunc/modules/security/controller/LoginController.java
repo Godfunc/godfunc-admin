@@ -1,5 +1,6 @@
 package com.godfunc.modules.security.controller;
 
+import com.godfunc.common.constant.ManageConstant;
 import com.godfunc.modules.security.dto.LoginDTO;
 import com.godfunc.modules.security.param.LoginParam;
 import com.godfunc.modules.security.service.CaptchaService;
@@ -43,7 +44,7 @@ public class LoginController {
     }
 
     // 生成swagger接口文档用了，没啥用，根本不会被访问到，会被UsernamePasswordJsonAuthenticationFilter拦截掉并处理返回
-    @PostMapping("login")
+    @PostMapping(ManageConstant.LOGIN_PATH)
     @ApiOperation("登录")
     public R<LoginDTO> login(@RequestBody LoginParam param) {
         return null;
