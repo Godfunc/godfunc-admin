@@ -1,3 +1,5 @@
+create database godfunc;
+use godfunc;
 drop table if exists mg_config;
 create table mg_config
 (

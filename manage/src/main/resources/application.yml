@@ -45,9 +45,9 @@ spring:
   application:
     name: godfunc-manager
   datasource:
-    url: jdbc:mysql://localhost:3306/godfunc?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/godfunc?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
-    password: 123456
+    password: ${MYSQL_ROOT_PASSWORD:123456}
     # url: jdbc:oracle:thin:@//localhost:1521/ORCL
     # username: root
     # password: 123456

@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  mysql:
+    image: registry.cn-hangzhou.aliyuncs.com/k8s-godfunc/godfunc-mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      TZ: Asia/Shanghai
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+    networks:
+      - lowcode
+  godfunc-admin:
+    image: registry.cn-hangzhou.aliyuncs.com/k8s-godfunc/godfunc-admin
+    ports:
+      - 9080:9080
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_ROOT_PASSWORD: 123456
+    depends_on:
+      - mysql
+    networks:
+      - lowcode
+networks:
+  lowcode:
+    driver: bridge
